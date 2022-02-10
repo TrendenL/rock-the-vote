@@ -27,11 +27,14 @@ export default function IssueProvider(props) {
     const [ userState, setUserState ] = useState(initState)
 
     // Get all issues
-    useEffect(() => {
-        userAxios.get("/api/issue/")
-        .then(res => console.log(res.data))
+    function getIssues(){
+        userAxios.get("/api/issue")
+        .then(res => setIssueState(prevState => ({
+            ...prevState,
+            issues: res.data
+        })))
         .catch(err => console.log(err.response.data.errMsg))
-    }, [])
+    }
 
     // Get user issues
     function getUserIssues(){
@@ -42,6 +45,10 @@ export default function IssueProvider(props) {
         })))
         .catch(err => console.log(err.response.data.errMsg))
     }
+
+    useEffect(() => {
+        getIssues()
+    },[])
 
     // Post issue
     function postIssue(newIssue){
@@ -61,7 +68,9 @@ export default function IssueProvider(props) {
                 value={{
                     ...userState,
                     getUserIssues,
-                    postIssue
+                    postIssue,
+                    getIssues,
+                    issueState
                 }}>
                 {props.children}
             </IssueContext.Provider>

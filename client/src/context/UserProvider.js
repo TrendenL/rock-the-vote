@@ -11,7 +11,7 @@ export default function UserProvider(props) {
 
     const [ userState, setUserState ] = useState(initState)
 
-    const { getUserIssues } = useContext(IssueContext)
+    const { getUserIssues, issues } = useContext(IssueContext)
 
     // signup
     function signup(credentials){
@@ -36,12 +36,23 @@ export default function UserProvider(props) {
             const { user, token } = res.data
             localStorage.setItem("token", token)
             localStorage.setItem("user", JSON.stringify(user))
-            getUserIssues()
-            setUserState(prevUserState => ({
-                ...prevUserState,
-                token,
-                user
-            }))
+            // getUserIssues()
+            // setUserState(prevUserState => ({
+            //     ...prevUserState,
+            //     token,
+            //     user
+            // }))
+
+            setUserState(prevUserState=> {
+            const userIssues = issues.filter(issue => issue._id === user._id)
+
+                return { 
+                    ...prevUserState,
+                    token, 
+                    user,
+                    issues: []
+                }
+            })
         })
         .catch(err => console.log(err.response.data.errMsg))
     }

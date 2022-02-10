@@ -23,6 +23,7 @@ export default function IssueForm(props) {
         postIssue(inputs)
         setInputs(initInputs)
     }
+    
     const { title, content } = inputs
     return (
         <div>
@@ -46,4 +47,3 @@ export default function IssueForm(props) {
         </div>
     )
 }
-

@@ -5,8 +5,8 @@ import IssueForm from './IssueForm'
 import IssueList from './IssueList'
 
 export default function Profile() {
-    const { user: { username } } = useContext(UserContext)
-    const { postIssue, issues, } = useContext(IssueContext)
+    const { user: { username, issues } } = useContext(UserContext)
+    const { postIssue } = useContext(IssueContext)
 
 
     
